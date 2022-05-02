@@ -5,9 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.jonas.freshgifs.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class TrendingFragment : Fragment() {
+
+    private val viewModel by viewModels<TrendingViewModel>()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        viewModel.getTrendingGIFS()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
