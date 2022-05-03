@@ -1,4 +1,4 @@
-package com.jonas.freshgifs.ui.trending
+package com.jonas.freshgifs.ui.discover
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
 
 @HiltViewModel
-class TrendingViewModel @Inject constructor(
+class DiscoverViewModel @Inject constructor(
     private val getTrendingGIFSUseCase: GetTrendingGIFSUseCase,
     private val searchGIFSUseCase: SearchGIFSUseCase,
     private val addFavoriteGIFUseCase: AddFavoriteGIFUseCase,
@@ -19,21 +19,21 @@ class TrendingViewModel @Inject constructor(
     private val revalidateFavoriteGIFSUseCase: RevalidateFavoriteGIFSUseCase,
 ): ViewModel() {
 
-    private val _trendingUIState =
-        MutableStateFlow<TrendingUIState>(TrendingUIState.Empty)
-    val trendingUIState: StateFlow<TrendingUIState> = _trendingUIState
+    private val _discoverUIState =
+        MutableStateFlow<DiscoverUIState>(DiscoverUIState.Empty)
+    val discoverUIState: StateFlow<DiscoverUIState> = _discoverUIState
 
     private val loadingScope = CoroutineScope(Dispatchers.Main + Job())
 
     fun getTrendingGIFS() {
         loadingScope.launch {
             try {
-                _trendingUIState.value = TrendingUIState.Loading
+                _discoverUIState.value = DiscoverUIState.Loading
                 val gifs = getTrendingGIFSUseCase()
-                _trendingUIState.value = TrendingUIState.Success(gifs)
+                _discoverUIState.value = DiscoverUIState.Success(gifs)
             }catch (e: Exception) {
                 e.printStackTrace()
-                _trendingUIState.value = TrendingUIState.Error
+                _discoverUIState.value = DiscoverUIState.Error
             }
         }
     }
@@ -42,12 +42,12 @@ class TrendingViewModel @Inject constructor(
         loadingScope.coroutineContext.cancelChildren()
         loadingScope.launch {
             try {
-                _trendingUIState.value = TrendingUIState.Loading
+                _discoverUIState.value = DiscoverUIState.Loading
                 val gifs = searchGIFSUseCase(query)
-                _trendingUIState.value = TrendingUIState.Success(gifs)
+                _discoverUIState.value = DiscoverUIState.Success(gifs)
             }catch (e: Exception) {
                 e.printStackTrace()
-                _trendingUIState.value = TrendingUIState.Error
+                _discoverUIState.value = DiscoverUIState.Error
             }
         }
     }
@@ -67,10 +67,10 @@ class TrendingViewModel @Inject constructor(
     }
 
     private suspend fun revalidateFavoriteGIFS() {
-        val currentUIState = _trendingUIState.value
-        if(currentUIState is TrendingUIState.Success) {
+        val currentUIState = _discoverUIState.value
+        if(currentUIState is DiscoverUIState.Success) {
             val revalidatedItems = revalidateFavoriteGIFSUseCase(currentUIState.gifs)
-            _trendingUIState.value = TrendingUIState.Success(revalidatedItems)
+            _discoverUIState.value = DiscoverUIState.Success(revalidatedItems)
         }
     }
 }

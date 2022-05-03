@@ -1,4 +1,4 @@
-package com.jonas.freshgifs.ui.trending
+package com.jonas.freshgifs.ui.discover
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,18 +10,18 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.jonas.freshgifs.databinding.FragmentTrendingBinding
+import com.jonas.freshgifs.databinding.FragmentDiscoverBinding
 import com.jonas.freshgifs.domain.model.GIF
-import com.jonas.freshgifs.ui.trending.adapter.GIFAdapter
+import com.jonas.freshgifs.ui.discover.adapter.GIFAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class TrendingFragment : Fragment() {
+class DiscoverFragment : Fragment() {
 
-    private val viewModel by viewModels<TrendingViewModel>()
-    private lateinit var binding: FragmentTrendingBinding
+    private val viewModel by viewModels<DiscoverViewModel>()
+    private lateinit var binding: FragmentDiscoverBinding
 
     private lateinit var gifAdapter: GIFAdapter
 
@@ -30,7 +30,7 @@ class TrendingFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentTrendingBinding.inflate(inflater, container, false)
+        binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
 
         setupObservers()
@@ -57,12 +57,12 @@ class TrendingFragment : Fragment() {
     private fun setupObservers() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.trendingUIState.collect { state ->
+                viewModel.discoverUIState.collect { state ->
                     when(state) {
-                        TrendingUIState.Empty -> {}
-                        TrendingUIState.Loading -> handleLoading()
-                        is TrendingUIState.Success -> handleSuccess(state.gifs)
-                        TrendingUIState.Error -> handleError()
+                        DiscoverUIState.Empty -> {}
+                        DiscoverUIState.Loading -> handleLoading()
+                        is DiscoverUIState.Success -> handleSuccess(state.gifs)
+                        DiscoverUIState.Error -> handleError()
                     }
                 }
             }
@@ -128,6 +128,6 @@ class TrendingFragment : Fragment() {
 
     companion object {
         fun newInstance() =
-            TrendingFragment()
+            DiscoverFragment()
     }
 }

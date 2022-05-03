@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">FreshGIFs</string>
-    <string name="tab_trending">Trending</string>
+    <string name="tab_discover">Discover</string>
     <string name="tab_favorite">Favorite</string>
     <string name="selecting_best_gifts">We are selecting the best gifs for you!</string>
     <string name="try_again">Try again</string>

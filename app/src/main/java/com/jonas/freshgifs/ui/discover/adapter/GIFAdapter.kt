@@ -1,4 +1,4 @@
-package com.jonas.freshgifs.ui.trending.adapter
+package com.jonas.freshgifs.ui.discover.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
