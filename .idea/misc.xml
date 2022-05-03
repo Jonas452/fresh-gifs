@@ -5,9 +5,10 @@
       <map>
         <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/drawable/error_sad.xml" value="0.216" />
         <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/activity_main.xml" value="0.17249240121580547" />
-        <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/fragment_discover.xml" value="0.19791666666666666" />
+        <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/fragment_discover.xml" value="0.33" />
         <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/fragment_favorite.xml" value="0.3546875" />
         <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/fragment_trending.xml" value="0.3546875" />
+        <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/gif_favorite_item.xml" value="0.3546875" />
         <entry key="..\:/Projects/Android/fresh-gifs/app/src/main/res/layout/gif_item.xml" value="0.3546875" />
       </map>
     </option>
