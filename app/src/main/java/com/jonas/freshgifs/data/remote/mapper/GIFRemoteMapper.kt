@@ -10,5 +10,6 @@ class GIFRemoteMapper @Inject constructor() {
         GIF(
             id = gifResponse.id,
             url = gifResponse.image.fixedHeight.url,
+            isFavorite = false,
         )
 }
