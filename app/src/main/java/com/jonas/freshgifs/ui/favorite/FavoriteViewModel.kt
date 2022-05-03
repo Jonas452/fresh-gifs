@@ -20,15 +20,16 @@ class FavoriteViewModel @Inject constructor(
 
     val allFavoriteGIFS: StateFlow<FavoriteUIState> =
         getAllFavoriteGIFSUseCase()
-        .map {
-            FavoriteUIState.Success(it)
-        }.catch {
-            FavoriteUIState.Error
-        }.stateIn(
-            viewModelScope,
-            SharingStarted.Lazily,
-            FavoriteUIState.Loading,
-        )
+            .onStart { FavoriteUIState.Loading }
+            .map {
+                FavoriteUIState.Success(it)
+            }.catch {
+                FavoriteUIState.Error
+            }.stateIn(
+                viewModelScope,
+                SharingStarted.Lazily,
+                FavoriteUIState.Loading,
+            )
 
     fun addFavoriteGIF(gif: GIF) {
         viewModelScope.launch {
