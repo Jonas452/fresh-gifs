@@ -18,5 +18,5 @@ interface FreshGIFSRepository {
 
     suspend fun delete(gif: GIF)
 
-    suspend fun getAllFavoriteGIFS(): Flow<List<GIF>>
+    fun getAllFavoriteGIFS(): Flow<List<GIF>>
 }

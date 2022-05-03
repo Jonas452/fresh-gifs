@@ -1,4 +1,4 @@
-package com.jonas.freshgifs.ui.discover.adapter
+package com.jonas.freshgifs.ui.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -36,9 +36,9 @@ class GIFAdapter(
             removeFavoriteGIF: (gif: GIF) -> Unit,
         ) {
             binding.favoriteButton.text = if(item.isFavorite) {
-                context.getString(R.string.remove_favorite_gif)
+                context.getString(R.string.unfavorite_gif)
             }else {
-                context.getString(R.string.add_favorite_gif)
+                context.getString(R.string.favorite_gif)
             }
 
             binding.favoriteButton.setOnClickListener {

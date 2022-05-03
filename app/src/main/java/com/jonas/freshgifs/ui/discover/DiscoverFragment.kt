@@ -12,7 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.jonas.freshgifs.databinding.FragmentDiscoverBinding
 import com.jonas.freshgifs.domain.model.GIF
-import com.jonas.freshgifs.ui.discover.adapter.GIFAdapter
+import com.jonas.freshgifs.ui.adapter.GIFAdapter
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -33,9 +33,9 @@ class DiscoverFragment : Fragment() {
         binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        setupObservers()
         setupClickListeners()
         setupAdapters()
+        setupObservers()
 
         return binding.root
     }

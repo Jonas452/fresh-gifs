@@ -54,10 +54,8 @@ class FreshGIFSRepositoryImpl @Inject constructor(
             )
         }
 
-    override suspend fun getAllFavoriteGIFS(): Flow<List<GIF>> =
-        withContext(coroutineContext) {
-            return@withContext favoriteGIFDao.getAllFavoriteGIFS().map {
-                it.map { favoriteGIFEntity -> gifLocalMapper.toDomainModel(favoriteGIFEntity) }
-            }
+    override fun getAllFavoriteGIFS(): Flow<List<GIF>> =
+        favoriteGIFDao.getAllFavoriteGIFS().map {
+            it.map { favoriteGIFEntity -> gifLocalMapper.toDomainModel(favoriteGIFEntity) }
         }
 }

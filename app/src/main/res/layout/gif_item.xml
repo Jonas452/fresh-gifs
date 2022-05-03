@@ -36,7 +36,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/gifImageView"
                 app:layout_constraintStart_toEndOf="@+id/gifImageView"
                 app:layout_constraintTop_toTopOf="@+id/gifImageView"
-                tools:text="@string/add_favorite_gif"/>
+                tools:text="@string/favorite_gif"/>
         </androidx.appcompat.widget.LinearLayoutCompat>
     </com.google.android.material.card.MaterialCardView>
 </layout>
