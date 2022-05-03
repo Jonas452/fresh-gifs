@@ -39,8 +39,12 @@ class TrendingFragment : Fragment() {
     }
 
     private fun loadGIFS() {
-        viewModel.getTrendingGIFS()
-        // TODO check if is to get trending or search
+        val queryText = binding.searchGIFInputText.text.toString()
+        if(queryText.isNotEmpty()) {
+            viewModel.searchGIFS(queryText)
+        }else {
+            viewModel.getTrendingGIFS()
+        }
     }
 
     private fun setupObservers() {
@@ -60,6 +64,10 @@ class TrendingFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding.tryAgainButton.setOnClickListener {
+            loadGIFS()
+        }
+
+        binding.searchGIFButton.setOnClickListener {
             loadGIFS()
         }
     }

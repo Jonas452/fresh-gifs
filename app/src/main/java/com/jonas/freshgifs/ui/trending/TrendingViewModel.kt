@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.jonas.freshgifs.domain.usecase.GetTrendingGIFSUseCase
 import com.jonas.freshgifs.domain.usecase.SearchGIFSUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,9 +25,20 @@ class TrendingViewModel @Inject constructor(
             try {
                 _trendingUIState.value = TrendingUIState.Loading
                 val gifs = getTrendingGIFSUseCase()
-                gifs.forEach {  gif ->
-                    println(gif.id)
-                }
+                _trendingUIState.value = TrendingUIState.Success(gifs)
+            }catch (e: Exception) {
+                e.printStackTrace()
+                _trendingUIState.value = TrendingUIState.Error
+            }
+        }
+    }
+
+    fun searchGIFS(query: String) {
+        viewModelScope.coroutineContext.cancelChildren()
+        viewModelScope.launch {
+            try {
+                _trendingUIState.value = TrendingUIState.Loading
+                val gifs = searchGIFSUseCase(query)
                 _trendingUIState.value = TrendingUIState.Success(gifs)
             }catch (e: Exception) {
                 e.printStackTrace()
