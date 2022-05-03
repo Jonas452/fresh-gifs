@@ -75,6 +75,9 @@ class DiscoverFragment : Fragment() {
         }
 
         binding.searchGIFButton.setOnClickListener {
+            // This search click is just to make the code more simple
+            // Could start loading after the user typed 3 or more letters
+
             loadGIFS()
         }
     }

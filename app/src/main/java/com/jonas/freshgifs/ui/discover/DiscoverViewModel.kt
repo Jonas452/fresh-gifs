@@ -66,6 +66,9 @@ class DiscoverViewModel @Inject constructor(
         }
     }
 
+    /*
+        Look at the RevalidateFavoriteGIFSUseCase for explanation
+     */
     private suspend fun revalidateFavoriteGIFS() {
         val currentUIState = _discoverUIState.value
         if(currentUIState is DiscoverUIState.Success) {
