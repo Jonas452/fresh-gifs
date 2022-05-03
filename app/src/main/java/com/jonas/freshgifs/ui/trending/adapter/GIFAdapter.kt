@@ -11,11 +11,15 @@ import com.jonas.freshgifs.R
 import com.jonas.freshgifs.databinding.GifItemBinding
 import com.jonas.freshgifs.domain.model.GIF
 
-class GIFAdapter(private val context: Context) :
+class GIFAdapter(
+    private val context: Context,
+    private val addFavoriteGIF: (gif: GIF) -> Unit,
+    private val removeFavoriteGIF: (gif: GIF) -> Unit,
+) :
     ListAdapter<GIF, GIFAdapter.ViewHolder>(PostDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(context, getItem(position))
+        holder.bind(context, getItem(position), addFavoriteGIF, removeFavoriteGIF)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,7 +29,26 @@ class GIFAdapter(private val context: Context) :
     class ViewHolder private constructor(private val binding: GifItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(context: Context, item: GIF) {
+        fun bind(
+            context: Context,
+            item: GIF,
+            addFavoriteGIF: (gif: GIF) -> Unit,
+            removeFavoriteGIF: (gif: GIF) -> Unit,
+        ) {
+            binding.favoriteButton.text = if(item.isFavorite) {
+                context.getString(R.string.remove_favorite_gif)
+            }else {
+                context.getString(R.string.add_favorite_gif)
+            }
+
+            binding.favoriteButton.setOnClickListener {
+                if(item.isFavorite) {
+                    removeFavoriteGIF.invoke(item)
+                }else {
+                    addFavoriteGIF.invoke(item)
+                }
+            }
+
             Glide.with(context)
                 .load(item.url)
                 .placeholder(R.drawable.ic_launcher_foreground)

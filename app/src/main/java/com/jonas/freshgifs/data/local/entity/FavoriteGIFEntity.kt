@@ -2,11 +2,12 @@ package com.jonas.freshgifs.data.local.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.jonas.freshgifs.data.local.entity.FavoriteGIFEntity.Companion.TABLE_NAME
 
 @Entity(tableName = TABLE_NAME)
 data class FavoriteGIFEntity(
-    @ColumnInfo(name = COLUMN_ID) var id: String,
+    @PrimaryKey @ColumnInfo(name = COLUMN_ID) var id: String,
     @ColumnInfo(name = COLUMN_URL) var url: String,
 ) {
 

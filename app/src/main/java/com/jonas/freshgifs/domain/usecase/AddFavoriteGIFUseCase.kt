@@ -4,7 +4,7 @@ import com.jonas.freshgifs.data.repository.FreshGIFSRepository
 import com.jonas.freshgifs.domain.model.GIF
 import javax.inject.Inject
 
-class AddFavoriteGIFUseCase@Inject constructor(
+class AddFavoriteGIFUseCase @Inject constructor(
     private val freshGIFSRepository: FreshGIFSRepository,
 ) {
 

@@ -23,6 +23,8 @@ class TrendingFragment : Fragment() {
     private val viewModel by viewModels<TrendingViewModel>()
     private lateinit var binding: FragmentTrendingBinding
 
+    private lateinit var gifAdapter: GIFAdapter
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -33,6 +35,7 @@ class TrendingFragment : Fragment() {
 
         setupObservers()
         setupClickListeners()
+        setupAdapters()
 
         return binding.root
     }
@@ -76,16 +79,30 @@ class TrendingFragment : Fragment() {
         }
     }
 
+    private fun setupAdapters() {
+        gifAdapter = GIFAdapter(
+            requireContext(),
+            ::addFavoriteGIF,
+            ::removeFavoriteGIF,
+        )
+        binding.gifsList.adapter = gifAdapter
+    }
+
     private fun handleLoading() {
         showLayout(LayoutType.LOADING)
     }
 
     private fun handleSuccess(gifs: List<GIF>) {
         showLayout(LayoutType.GIFS)
-
-        val gifAdapter = GIFAdapter(requireContext())
         gifAdapter.submitList(gifs)
-        binding.gifsList.adapter = gifAdapter
+    }
+
+    private fun addFavoriteGIF(gif: GIF) {
+        viewModel.addFavoriteGIF(gif)
+    }
+
+    private fun removeFavoriteGIF(gif: GIF) {
+        viewModel.removeFavoriteGIF(gif)
     }
 
     private fun handleError() {

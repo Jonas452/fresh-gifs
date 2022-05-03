@@ -2,8 +2,8 @@ package com.jonas.freshgifs.ui.trending
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jonas.freshgifs.domain.usecase.GetTrendingGIFSUseCase
-import com.jonas.freshgifs.domain.usecase.SearchGIFSUseCase
+import com.jonas.freshgifs.domain.model.GIF
+import com.jonas.freshgifs.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,14 +14,19 @@ import javax.inject.Inject
 class TrendingViewModel @Inject constructor(
     private val getTrendingGIFSUseCase: GetTrendingGIFSUseCase,
     private val searchGIFSUseCase: SearchGIFSUseCase,
+    private val addFavoriteGIFUseCase: AddFavoriteGIFUseCase,
+    private val removeFavoriteGIFUseCase: RemoveFavoriteGIFUseCase,
+    private val revalidateFavoriteGIFSUseCase: RevalidateFavoriteGIFSUseCase,
 ): ViewModel() {
 
     private val _trendingUIState =
         MutableStateFlow<TrendingUIState>(TrendingUIState.Empty)
     val trendingUIState: StateFlow<TrendingUIState> = _trendingUIState
 
+    private val loadingScope = CoroutineScope(Dispatchers.Main + Job())
+
     fun getTrendingGIFS() {
-        viewModelScope.launch {
+        loadingScope.launch {
             try {
                 _trendingUIState.value = TrendingUIState.Loading
                 val gifs = getTrendingGIFSUseCase()
@@ -34,8 +39,8 @@ class TrendingViewModel @Inject constructor(
     }
 
     fun searchGIFS(query: String) {
-        viewModelScope.coroutineContext.cancelChildren()
-        viewModelScope.launch {
+        loadingScope.coroutineContext.cancelChildren()
+        loadingScope.launch {
             try {
                 _trendingUIState.value = TrendingUIState.Loading
                 val gifs = searchGIFSUseCase(query)
@@ -44,6 +49,28 @@ class TrendingViewModel @Inject constructor(
                 e.printStackTrace()
                 _trendingUIState.value = TrendingUIState.Error
             }
+        }
+    }
+
+    fun addFavoriteGIF(gif: GIF) {
+        viewModelScope.launch {
+            addFavoriteGIFUseCase(gif)
+            revalidateFavoriteGIFS()
+        }
+    }
+
+    fun removeFavoriteGIF(gif: GIF) {
+        viewModelScope.launch {
+            removeFavoriteGIFUseCase(gif)
+            revalidateFavoriteGIFS()
+        }
+    }
+
+    private suspend fun revalidateFavoriteGIFS() {
+        val currentUIState = _trendingUIState.value
+        if(currentUIState is TrendingUIState.Success) {
+            val revalidatedItems = revalidateFavoriteGIFSUseCase(currentUIState.gifs)
+            _trendingUIState.value = TrendingUIState.Success(revalidatedItems)
         }
     }
 }

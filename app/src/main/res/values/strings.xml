@@ -6,4 +6,6 @@
     <string name="try_again">Try again</string>
     <string name="error_getting_gifs">Sorry! Something went wrong while loading your gifs. Please try again</string>
     <string name="gif_search_hint">Type anything to find gifs</string>
+    <string name="add_favorite_gif">Add Favorite GIF</string>
+    <string name="remove_favorite_gif">Remove Favorite GIF</string>
 </resources>

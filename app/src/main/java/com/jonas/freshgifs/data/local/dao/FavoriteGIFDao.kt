@@ -26,5 +26,5 @@ interface FavoriteGIFDao {
             SELECT * FROM $TABLE_NAME
         """
     )
-    suspend fun getAllFavoriteGIFS(): Flow<List<FavoriteGIFEntity>>
+    fun getAllFavoriteGIFS(): Flow<List<FavoriteGIFEntity>>
 }
