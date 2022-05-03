@@ -31,11 +31,15 @@ class TrendingFragment : Fragment() {
         binding = FragmentTrendingBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        loadGIFS()
         setupObservers()
         setupClickListeners()
 
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadGIFS()
     }
 
     private fun loadGIFS() {
