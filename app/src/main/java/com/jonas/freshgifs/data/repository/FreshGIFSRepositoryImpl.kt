@@ -1,6 +1,6 @@
 package com.jonas.freshgifs.data.repository
 
-import com.jonas.freshgifs.data.local.dao.FavoriteGIFDao
+import com.jonas.freshgifs.data.local.dao.FavoriteGIFDAO
 import com.jonas.freshgifs.data.local.mapper.GIFLocalMapper
 import com.jonas.freshgifs.data.remote.FreshGIFSRemoteDataSource
 import com.jonas.freshgifs.data.remote.mapper.GIFRemoteMapper
@@ -15,7 +15,7 @@ import kotlin.coroutines.CoroutineContext
 class FreshGIFSRepositoryImpl @Inject constructor(
     private val freshGIFSRemoteDataSource: FreshGIFSRemoteDataSource,
     private val gifRemoteMapper: GIFRemoteMapper,
-    private val favoriteGIFDao: FavoriteGIFDao,
+    private val favoriteGIFDao: FavoriteGIFDAO,
     private val gifLocalMapper: GIFLocalMapper,
     @IOContext private val coroutineContext: CoroutineContext,
 ): FreshGIFSRepository {

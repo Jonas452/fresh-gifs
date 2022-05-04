@@ -6,7 +6,7 @@ import com.jonas.freshgifs.data.local.entity.FavoriteGIFEntity.Companion.TABLE_N
 import kotlinx.coroutines.flow.Flow
 
 @Dao
-interface FavoriteGIFDao {
+interface FavoriteGIFDAO {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(favoriteGIFEntity: FavoriteGIFEntity)

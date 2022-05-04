@@ -15,4 +15,7 @@ object CoroutineModule {
     @IOContext
     fun providesIOContext(): CoroutineContext = Dispatchers.IO
 
+    @Provides
+    @MainContext
+    fun providesMainContext(): CoroutineContext = Dispatchers.Main
 }

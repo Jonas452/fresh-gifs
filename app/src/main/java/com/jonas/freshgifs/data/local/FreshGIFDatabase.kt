@@ -5,7 +5,7 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.jonas.freshgifs.data.local.entity.FavoriteGIFEntity
-import com.jonas.freshgifs.data.local.dao.FavoriteGIFDao
+import com.jonas.freshgifs.data.local.dao.FavoriteGIFDAO
 
 @Database(
     entities = [
@@ -15,7 +15,7 @@ import com.jonas.freshgifs.data.local.dao.FavoriteGIFDao
 )
 abstract class FreshGIFDatabase: RoomDatabase() {
 
-    abstract fun getFavoriteGIFDao(): FavoriteGIFDao
+    abstract fun getFavoriteGIFDao(): FavoriteGIFDAO
 
     companion object {
         private const val DB_NAME = "fresh_gifs.db"

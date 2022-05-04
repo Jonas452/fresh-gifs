@@ -8,6 +8,6 @@
 
 ## Future Improvements
 - Cache the gifs in the local database using room, and use room as the single source of true of the data (this avoid bugs)
-- Add UI tests
+- Add UI tests and more unit tests
 - Add animation when changing tabs or when adding a gif to favorite (like a different button with animation)
 - Add infinite scroll using the Paging3 lib (right now is hardcoded to show only 20 items)
