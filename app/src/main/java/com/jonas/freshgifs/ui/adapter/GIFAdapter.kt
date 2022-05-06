@@ -12,25 +12,26 @@ import com.jonas.freshgifs.databinding.GifItemBinding
 import com.jonas.freshgifs.domain.model.GIF
 
 class GIFAdapter(
-    private val context: Context,
     private val addFavoriteGIF: (gif: GIF) -> Unit,
     private val removeFavoriteGIF: (gif: GIF) -> Unit,
 ) :
     ListAdapter<GIF, GIFAdapter.ViewHolder>(PostDiffCallback()) {
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(context, getItem(position), addFavoriteGIF, removeFavoriteGIF)
+        holder.bind(getItem(position), addFavoriteGIF, removeFavoriteGIF)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder.from(parent)
     }
 
-    class ViewHolder private constructor(private val binding: GifItemBinding) :
+    class ViewHolder private constructor(
+        private val context: Context,
+        private val binding: GifItemBinding,
+    ) :
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(
-            context: Context,
             item: GIF,
             addFavoriteGIF: (gif: GIF) -> Unit,
             removeFavoriteGIF: (gif: GIF) -> Unit,
@@ -61,7 +62,7 @@ class GIFAdapter(
                 val layoutInflater = LayoutInflater.from(parent.context)
                 val binding = GifItemBinding.inflate(layoutInflater, parent, false)
 
-                return ViewHolder(binding)
+                return ViewHolder(parent.context, binding)
             }
         }
     }

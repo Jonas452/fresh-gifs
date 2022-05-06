@@ -55,7 +55,6 @@ class FavoriteFragment : Fragment() {
 
     private fun setupAdapters() {
         gifAdapter = GIFAdapter(
-            requireContext(),
             ::addFavoriteGIF,
             ::removeFavoriteGIF,
         )
