@@ -6,49 +6,49 @@ import com.jonas.freshgifs.data.remote.FreshGIFSRemoteDataSource
 import com.jonas.freshgifs.data.remote.mapper.GIFRemoteMapper
 import com.jonas.freshgifs.di.IOContext
 import com.jonas.freshgifs.domain.model.GIF
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 class FreshGIFSRepositoryImpl @Inject constructor(
     private val freshGIFSRemoteDataSource: FreshGIFSRemoteDataSource,
     private val gifRemoteMapper: GIFRemoteMapper,
     private val favoriteGIFDao: FavoriteGIFDAO,
     private val gifLocalMapper: GIFLocalMapper,
-    @IOContext private val coroutineContext: CoroutineContext,
+    @IOContext private val coroutineDispatcher: CoroutineDispatcher,
 ): FreshGIFSRepository {
 
     override suspend fun getTrendingGIFS(apiKey: String): List<GIF> =
-        withContext(coroutineContext) {
+        withContext(coroutineDispatcher) {
             return@withContext freshGIFSRemoteDataSource.getTrendingGIFS(apiKey).data.map {
                 gifRemoteMapper.fromGIFResponse(it)
             }
         }
 
     override suspend fun searchGIFS(apiKey: String, query: String): List<GIF> =
-        withContext(coroutineContext) {
+        withContext(coroutineDispatcher) {
             return@withContext freshGIFSRemoteDataSource.searchGIFS(apiKey, query).data.map {
                 gifRemoteMapper.fromGIFResponse(it)
             }
         }
 
     override suspend fun insert(gif: GIF) =
-        withContext(coroutineContext) {
+        withContext(coroutineDispatcher) {
             favoriteGIFDao.insert(
                 gifLocalMapper.toEntity(gif)
             )
         }
 
     override suspend fun getFavoriteGIFById(id: String): GIF? =
-        withContext(coroutineContext) {
+        withContext(coroutineDispatcher) {
             val favoriteGIF = favoriteGIFDao.getFavoriteGIFById(id) ?: return@withContext null
             return@withContext gifLocalMapper.toDomainModel(favoriteGIF)
         }
 
     override suspend fun delete(gif: GIF) =
-        withContext(coroutineContext) {
+        withContext(coroutineDispatcher) {
             favoriteGIFDao.delete(
                 gifLocalMapper.toEntity(gif)
             )

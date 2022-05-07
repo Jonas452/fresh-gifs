@@ -10,7 +10,6 @@ import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import javax.inject.Inject
-import kotlin.coroutines.CoroutineContext
 
 @HiltViewModel
 class DiscoverViewModel @Inject constructor(
@@ -19,14 +18,14 @@ class DiscoverViewModel @Inject constructor(
     private val addFavoriteGIFUseCase: AddFavoriteGIFUseCase,
     private val removeFavoriteGIFUseCase: RemoveFavoriteGIFUseCase,
     private val revalidateFavoriteGIFSUseCase: RevalidateFavoriteGIFSUseCase,
-    @MainContext private val coroutineContext: CoroutineContext,
+    @MainContext private val coroutineDispatcher: CoroutineDispatcher,
 ): ViewModel() {
 
     private val _discoverUIState =
         MutableStateFlow<DiscoverUIState>(DiscoverUIState.Empty)
     val discoverUIState: StateFlow<DiscoverUIState> = _discoverUIState
 
-    private val loadingScope = CoroutineScope(coroutineContext + Job())
+    private val loadingScope = CoroutineScope(coroutineDispatcher + Job())
 
     fun getTrendingGIFS() {
         loadingScope.launch {
@@ -56,14 +55,14 @@ class DiscoverViewModel @Inject constructor(
     }
 
     fun addFavoriteGIF(gif: GIF) {
-        viewModelScope.launch(coroutineContext) {
+        viewModelScope.launch(coroutineDispatcher) {
             addFavoriteGIFUseCase(gif)
             revalidateFavoriteGIFS()
         }
     }
 
     fun removeFavoriteGIF(gif: GIF) {
-        viewModelScope.launch(coroutineContext) {
+        viewModelScope.launch(coroutineDispatcher) {
             removeFavoriteGIFUseCase(gif)
             revalidateFavoriteGIFS()
         }
