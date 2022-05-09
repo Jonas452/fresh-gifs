@@ -4,7 +4,7 @@ import com.jonas.freshgifs.data.local.dao.FavoriteGIFDAO
 import com.jonas.freshgifs.data.local.mapper.GIFLocalMapper
 import com.jonas.freshgifs.data.remote.FreshGIFSAPI
 import com.jonas.freshgifs.data.remote.mapper.GIFRemoteMapper
-import com.jonas.freshgifs.di.IOContext
+import com.jonas.freshgifs.di.IODispatcher
 import com.jonas.freshgifs.domain.model.GIF
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
@@ -17,7 +17,7 @@ class FreshGIFSRepositoryImpl @Inject constructor(
     private val gifRemoteMapper: GIFRemoteMapper,
     private val favoriteGIFDao: FavoriteGIFDAO,
     private val gifLocalMapper: GIFLocalMapper,
-    @IOContext private val coroutineDispatcher: CoroutineDispatcher,
+    @IODispatcher private val coroutineDispatcher: CoroutineDispatcher,
 ): FreshGIFSRepository {
 
     override suspend fun getTrendingGIFS(apiKey: String): List<GIF> =

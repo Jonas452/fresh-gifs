@@ -4,8 +4,8 @@ import javax.inject.Qualifier
 
 @Qualifier
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class IOContext
+annotation class IODispatcher
 
 @Qualifier
 @kotlin.annotation.Retention(AnnotationRetention.RUNTIME)
-annotation class MainContext
+annotation class MainDispatcher

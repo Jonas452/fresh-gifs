@@ -2,7 +2,7 @@ package com.jonas.freshgifs.ui.discover
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.jonas.freshgifs.di.MainContext
+import com.jonas.freshgifs.di.MainDispatcher
 import com.jonas.freshgifs.domain.model.GIF
 import com.jonas.freshgifs.domain.usecase.*
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +18,7 @@ class DiscoverViewModel @Inject constructor(
     private val addFavoriteGIFUseCase: AddFavoriteGIFUseCase,
     private val removeFavoriteGIFUseCase: RemoveFavoriteGIFUseCase,
     private val revalidateFavoriteGIFSUseCase: RevalidateFavoriteGIFSUseCase,
-    @MainContext private val coroutineDispatcher: CoroutineDispatcher,
+    @MainDispatcher private val coroutineDispatcher: CoroutineDispatcher,
 ): ViewModel() {
 
     private val _discoverUIState =
