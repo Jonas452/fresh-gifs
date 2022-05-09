@@ -22,8 +22,9 @@
 
             <ImageView
                 android:id="@+id/gifImageView"
-                android:layout_width="220dp"
-                android:layout_height="220dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:src="@drawable/ic_launcher_foreground" />
