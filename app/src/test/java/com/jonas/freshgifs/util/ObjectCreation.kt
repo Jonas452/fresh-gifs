@@ -4,6 +4,7 @@ import com.jonas.freshgifs.data.remote.response.BaseGIFResponse
 import com.jonas.freshgifs.data.remote.response.GIFResponse
 import com.jonas.freshgifs.data.remote.response.ImageResponse
 import com.jonas.freshgifs.data.remote.response.ImageSizeResponse
+import com.jonas.freshgifs.domain.model.GIF
 
 fun createBaseGIFResponse(
     data: List<GIFResponse> = listOf(createGIFResponse())
@@ -29,4 +30,14 @@ fun createImageSizeResponse(
     url: String = "empty_url"
 ) = ImageSizeResponse(
     url = url,
+)
+
+fun createGIF(
+    id: String = "1rqwrq1",
+    url: String = "empty_url",
+    isFavorite: Boolean = false,
+) = GIF(
+    id = id,
+    url = url,
+    isFavorite = isFavorite,
 )

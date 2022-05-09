@@ -1,6 +1,6 @@
 package com.jonas.freshgifs.di
 
-import com.jonas.freshgifs.data.remote.FreshGIFSRemoteDataSource
+import com.jonas.freshgifs.data.remote.FreshGIFSAPI
 import com.jonas.freshgifs.data.repository.FreshGIFSRepository
 import com.jonas.freshgifs.data.repository.FreshGIFSRepositoryImpl
 import com.jonas.freshgifs.util.Util.BASE_URL
@@ -43,8 +43,8 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun provideFreshGIFSRemoteDataSource(retrofit: Retrofit): FreshGIFSRemoteDataSource =
-        retrofit.create(FreshGIFSRemoteDataSource::class.java)
+    fun provideFreshGIFSRemoteDataSource(retrofit: Retrofit): FreshGIFSAPI =
+        retrofit.create(FreshGIFSAPI::class.java)
 
 
     @Provides

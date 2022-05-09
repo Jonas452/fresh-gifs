@@ -4,7 +4,7 @@ import com.jonas.freshgifs.data.remote.response.BaseGIFResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
-interface FreshGIFSRemoteDataSource {
+interface FreshGIFSAPI {
 
     @GET(TRENDING_ENDPOINT)
     suspend fun getTrendingGIFS(

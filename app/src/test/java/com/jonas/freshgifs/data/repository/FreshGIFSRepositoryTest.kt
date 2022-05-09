@@ -3,7 +3,7 @@ package com.jonas.freshgifs.data.repository
 import com.google.common.truth.Truth.assertThat
 import com.jonas.freshgifs.data.local.dao.FavoriteGIFDAO
 import com.jonas.freshgifs.data.local.mapper.GIFLocalMapper
-import com.jonas.freshgifs.data.remote.FreshGIFSRemoteDataSource
+import com.jonas.freshgifs.data.remote.FreshGIFSAPI
 import com.jonas.freshgifs.data.remote.mapper.GIFRemoteMapper
 import com.jonas.freshgifs.domain.model.GIF
 import com.jonas.freshgifs.util.createBaseGIFResponse
@@ -21,7 +21,7 @@ class FreshGIFSRepositoryTest {
 
     private lateinit var subject: FreshGIFSRepository
 
-    private val freshGIFSRemoteDataSource: FreshGIFSRemoteDataSource = mockk()
+    private val freshGIFSAPI: FreshGIFSAPI = mockk()
     private val favoriteGIFDao: FavoriteGIFDAO = mockk()
     private val gifRemoteMapper = GIFRemoteMapper()
     private val gifLocalMapper = GIFLocalMapper()
@@ -29,7 +29,7 @@ class FreshGIFSRepositoryTest {
     @Before
     fun setup() {
         subject = FreshGIFSRepositoryImpl(
-            freshGIFSRemoteDataSource,
+            freshGIFSAPI,
             gifRemoteMapper,
             favoriteGIFDao,
             gifLocalMapper,
@@ -46,7 +46,7 @@ class FreshGIFSRepositoryTest {
             createGIFResponse(),
         )
         coEvery {
-            freshGIFSRemoteDataSource.getTrendingGIFS(any())
+            freshGIFSAPI.getTrendingGIFS(any())
         } returns createBaseGIFResponse(gifResponse)
 
         // Act

@@ -2,7 +2,7 @@ package com.jonas.freshgifs.data.repository
 
 import com.jonas.freshgifs.data.local.dao.FavoriteGIFDAO
 import com.jonas.freshgifs.data.local.mapper.GIFLocalMapper
-import com.jonas.freshgifs.data.remote.FreshGIFSRemoteDataSource
+import com.jonas.freshgifs.data.remote.FreshGIFSAPI
 import com.jonas.freshgifs.data.remote.mapper.GIFRemoteMapper
 import com.jonas.freshgifs.di.IOContext
 import com.jonas.freshgifs.domain.model.GIF
@@ -13,7 +13,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class FreshGIFSRepositoryImpl @Inject constructor(
-    private val freshGIFSRemoteDataSource: FreshGIFSRemoteDataSource,
+    private val freshGIFSAPI: FreshGIFSAPI,
     private val gifRemoteMapper: GIFRemoteMapper,
     private val favoriteGIFDao: FavoriteGIFDAO,
     private val gifLocalMapper: GIFLocalMapper,
@@ -22,14 +22,14 @@ class FreshGIFSRepositoryImpl @Inject constructor(
 
     override suspend fun getTrendingGIFS(apiKey: String): List<GIF> =
         withContext(coroutineDispatcher) {
-            return@withContext freshGIFSRemoteDataSource.getTrendingGIFS(apiKey).data.map {
+            return@withContext freshGIFSAPI.getTrendingGIFS(apiKey).data.map {
                 gifRemoteMapper.fromGIFResponse(it)
             }
         }
 
     override suspend fun searchGIFS(apiKey: String, query: String): List<GIF> =
         withContext(coroutineDispatcher) {
-            return@withContext freshGIFSRemoteDataSource.searchGIFS(apiKey, query).data.map {
+            return@withContext freshGIFSAPI.searchGIFS(apiKey, query).data.map {
                 gifRemoteMapper.fromGIFResponse(it)
             }
         }
