@@ -11,7 +11,7 @@ import com.jonas.freshgifs.data.local.dao.FavoriteGIFDAO
     entities = [
         FavoriteGIFEntity::class,
     ],
-    version = 1,
+    version = 2,
 )
 abstract class FreshGIFDatabase: RoomDatabase() {
 

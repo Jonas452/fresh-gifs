@@ -14,9 +14,11 @@ fun createBaseGIFResponse(
 
 fun createGIFResponse(
     id: String = "qwe1r221134",
+    title: String = "gif title",
     image: ImageResponse = createImageResponse(),
 ) = GIFResponse(
     id = id,
+    title = title,
     image = image,
 )
 
@@ -34,10 +36,12 @@ fun createImageSizeResponse(
 
 fun createGIF(
     id: String = "1rqwrq1",
+    title: String = "gif title",
     url: String = "empty_url",
     isFavorite: Boolean = false,
 ) = GIF(
     id = id,
+    title = title,
     url = url,
     isFavorite = isFavorite,
 )

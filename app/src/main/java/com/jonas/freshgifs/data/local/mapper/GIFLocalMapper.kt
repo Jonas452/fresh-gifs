@@ -9,12 +9,14 @@ class GIFLocalMapper @Inject constructor() {
     fun toEntity(domainModel: GIF) =
         FavoriteGIFEntity(
             id = domainModel.id,
+            title = domainModel.title,
             url = domainModel.url,
         )
 
     fun toDomainModel(entity: FavoriteGIFEntity) =
         GIF(
             id = entity.id,
+            title = entity.title,
             url = entity.url,
             isFavorite = true,
         )

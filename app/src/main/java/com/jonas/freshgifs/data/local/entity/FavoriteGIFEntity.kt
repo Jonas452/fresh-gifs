@@ -7,14 +7,16 @@ import com.jonas.freshgifs.data.local.entity.FavoriteGIFEntity.Companion.TABLE_N
 
 @Entity(tableName = TABLE_NAME)
 data class FavoriteGIFEntity(
-    @PrimaryKey @ColumnInfo(name = COLUMN_ID) var id: String,
-    @ColumnInfo(name = COLUMN_URL) var url: String,
+    @PrimaryKey @ColumnInfo(name = COLUMN_ID) val id: String,
+    @ColumnInfo(name = COLUMN_TITLE) val title: String,
+    @ColumnInfo(name = COLUMN_URL) val url: String,
 ) {
 
     companion object {
         const val TABLE_NAME = "favorite_gif"
 
         const val COLUMN_ID = "id"
+        const val COLUMN_TITLE = "title"
         const val COLUMN_URL = "url"
 
     }

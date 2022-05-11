@@ -36,6 +36,7 @@ class GIFAdapter(
             addFavoriteGIF: (gif: GIF) -> Unit,
             removeFavoriteGIF: (gif: GIF) -> Unit,
         ) {
+            binding.gifTitle.text = item.title
             binding.favoriteButton.text = if(item.isFavorite) {
                 context.getString(R.string.unfavorite_gif)
             }else {
