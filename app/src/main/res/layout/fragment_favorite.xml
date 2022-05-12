@@ -6,7 +6,8 @@
     <androidx.appcompat.widget.LinearLayoutCompat
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/gray_f9f9f9">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/gifsList"
@@ -15,7 +16,7 @@
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             tools:itemCount="8"
-            tools:listitem="@layout/gif_item" />
+            tools:listitem="@layout/gif_single_column_list_item" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/loadingLayout"

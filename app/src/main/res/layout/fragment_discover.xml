@@ -44,7 +44,7 @@
             android:background="@color/gray_f9f9f9"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:itemCount="8"
-            tools:listitem="@layout/gif_item" />
+            tools:listitem="@layout/gif_single_column_list_item" />
 
         <androidx.appcompat.widget.LinearLayoutCompat
             android:id="@+id/loadingLayout"

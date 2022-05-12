@@ -13,6 +13,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.jonas.freshgifs.databinding.FragmentDiscoverBinding
 import com.jonas.freshgifs.domain.model.GIF
 import com.jonas.freshgifs.ui.adapter.GIFAdapter
+import com.jonas.freshgifs.ui.adapter.GIFListLayoutType
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
@@ -84,6 +85,7 @@ class DiscoverFragment : Fragment() {
 
     private fun setupAdapters() {
         gifAdapter = GIFAdapter(
+            GIFListLayoutType.SINGLE_COLUMN,
             ::addFavoriteGIF,
             ::removeFavoriteGIF,
         )
