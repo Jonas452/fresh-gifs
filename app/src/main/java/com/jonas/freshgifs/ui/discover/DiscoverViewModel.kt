@@ -26,31 +26,28 @@ class DiscoverViewModel @Inject constructor(
     val discoverUIState: StateFlow<DiscoverUIState> = _discoverUIState
 
     private val loadingScope = CoroutineScope(coroutineDispatcher + Job())
+    private val loadingExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        if(throwable !is CancellationException) {
+            throwable.printStackTrace()
+            _discoverUIState.value = DiscoverUIState.Error
+        }
+    }
 
     fun getTrendingGIFS() {
-        loadingScope.launch {
-            try {
-                _discoverUIState.value = DiscoverUIState.Loading
-                val gifs = getTrendingGIFSUseCase()
-                _discoverUIState.value = DiscoverUIState.Success(gifs)
-            }catch (e: Exception) {
-                e.printStackTrace()
-                _discoverUIState.value = DiscoverUIState.Error
-            }
+        loadingScope.coroutineContext.cancelChildren()
+        loadingScope.launch(loadingExceptionHandler) {
+            _discoverUIState.value = DiscoverUIState.Loading
+            val gifs = getTrendingGIFSUseCase()
+            _discoverUIState.value = DiscoverUIState.Success(gifs)
         }
     }
 
     fun searchGIFS(query: String) {
         loadingScope.coroutineContext.cancelChildren()
-        loadingScope.launch {
-            try {
-                _discoverUIState.value = DiscoverUIState.Loading
-                val gifs = searchGIFSUseCase(query)
-                _discoverUIState.value = DiscoverUIState.Success(gifs)
-            }catch (e: Exception) {
-                e.printStackTrace()
-                _discoverUIState.value = DiscoverUIState.Error
-            }
+        loadingScope.launch(loadingExceptionHandler) {
+            _discoverUIState.value = DiscoverUIState.Loading
+            val gifs = searchGIFSUseCase(query)
+            _discoverUIState.value = DiscoverUIState.Success(gifs)
         }
     }
 

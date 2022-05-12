@@ -1,10 +1,12 @@
 package com.jonas.freshgifs.ui.discover
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -34,7 +36,7 @@ class DiscoverFragment : Fragment() {
         binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         binding.lifecycleOwner = this.viewLifecycleOwner
 
-        setupClickListeners()
+        setupUIListeners()
         setupAdapters()
         setupObservers()
 
@@ -48,9 +50,9 @@ class DiscoverFragment : Fragment() {
 
     private fun loadGIFS() {
         val queryText = binding.searchGIFInputText.text.toString()
-        if(queryText.isNotEmpty()) {
+        if (queryText.isNotEmpty()) {
             viewModel.searchGIFS(queryText)
-        }else {
+        } else {
             viewModel.getTrendingGIFS()
         }
     }
@@ -59,7 +61,8 @@ class DiscoverFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.discoverUIState.collect { state ->
-                    when(state) {
+                    Log.d("UI_STATE", state.toString())
+                    when (state) {
                         DiscoverUIState.Empty -> {}
                         DiscoverUIState.Loading -> handleLoading()
                         is DiscoverUIState.Success -> handleSuccess(state.gifs)
@@ -70,16 +73,15 @@ class DiscoverFragment : Fragment() {
         }
     }
 
-    private fun setupClickListeners() {
+    private fun setupUIListeners() {
         binding.tryAgainButton.setOnClickListener {
             loadGIFS()
         }
 
-        binding.searchGIFButton.setOnClickListener {
-            // This search click is just to make the code more simple
-            // Could start loading after the user typed 3 or more letters
-
-            loadGIFS()
+        binding.searchGIFInputText.doOnTextChanged { text, _, _, _ ->
+            if (text != null && text.length >= MINIMUM_TEXT_SIZE_SEARCH) {
+                loadGIFS()
+            }
         }
     }
 
@@ -131,6 +133,8 @@ class DiscoverFragment : Fragment() {
     private enum class LayoutType { LOADING, GIFS, ERROR }
 
     companion object {
+        private const val MINIMUM_TEXT_SIZE_SEARCH = 2
+
         fun newInstance() =
             DiscoverFragment()
     }
